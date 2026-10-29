@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-55243326-8774-4955-b27b-6526c11717ae/styles.css">
+<style>
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent); }
+  *:focus-visible { outline: 2px solid var(--color-accent-700); outline-offset: 2px; }
+  [data-ptl] { container-type: inline-size; }
+  @container (max-width: 900px) {
+    [data-ptl-list] { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  }
+  @container (max-width: 600px) {
+    [data-ptl-h2] { font-size: 26px !important; }
+    [data-ptl-list] { display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px !important; margin: 0 -20px; padding: 0 20px 12px; }
+    [data-ptl-card] { flex: 0 0 84%; scroll-snap-align: center; grid-row: auto !important; grid-template-rows: auto !important; }
+    [data-ptl-hint] { display: block !important; }
+  }
+</style>
+</helmet>
+<section data-ptl="" aria-labelledby="ptl-h" style="width: 100%;">
+  <sc-if value="{{ hasStages }}" hint-placeholder-val="{{ true }}">
+  <p style="margin: 0 0 8px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Process</p>
+  <h2 id="ptl-h" data-ptl-h2="" style="margin: 0 0 32px; font-family: var(--font-heading); font-weight: 400; font-size: 30px; line-height: 1.1; text-wrap: pretty;">{{ tagline }}</h2>
+  <p data-ptl-hint="" style="display: none; margin: -16px 0 16px; font-size: 13px; color: var(--color-neutral-700);">Swipe or use arrow keys · {{ countLabel }}</p>
+  <ol tabindex="0" aria-label="Project process" data-ptl-list="" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 14px;">
+    <sc-for list="{{ stages }}" as="s" hint-placeholder-count="5">
+      <li data-ptl-card="" style="grid-row: span 3; display: grid; grid-template-rows: subgrid; row-gap: 0; background: var(--color-neutral-100); border: 1px solid var(--color-divider); border-top: 2px solid var(--color-accent-600);">
+        <div style="display: grid; gap: 12px; align-content: start; padding: 16px 16px 14px; background: var(--color-surface);">
+          <div aria-hidden="true" style="display: flex; justify-content: space-between; align-items: center; color: var(--color-accent-700);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <sc-if value="{{ s.isDiscover }}" hint-placeholder-val="{{ false }}"><circle cx="10" cy="10" r="6"></circle><line x1="14.5" y1="14.5" x2="20" y2="20"></line></sc-if>
+              <sc-if value="{{ s.isDefine }}" hint-placeholder-val="{{ false }}"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="3.5"></circle></sc-if>
+              <sc-if value="{{ s.isDesign }}" hint-placeholder-val="{{ false }}"><rect x="4" y="4" width="16" height="16"></rect><circle cx="12" cy="12" r="3.5"></circle></sc-if>
+              <sc-if value="{{ s.isTest }}" hint-placeholder-val="{{ false }}"><circle cx="12" cy="12" r="8.5"></circle><polyline points="8,12.5 11,15.5 16.5,9"></polyline></sc-if>
+              <sc-if value="{{ s.isBuild }}" hint-placeholder-val="{{ false }}"><rect x="3.5" y="8.5" width="12" height="12"></rect><polyline points="8.5,8.5 8.5,3.5 20.5,3.5 20.5,15.5 15.5,15.5"></polyline></sc-if>
+              <sc-if value="{{ s.isAnalyze }}" hint-placeholder-val="{{ false }}"><line x1="4" y1="20" x2="20" y2="20"></line><rect x="5.5" y="12" width="3" height="5"></rect><rect x="10.5" y="7" width="3" height="10"></rect><rect x="15.5" y="4" width="3" height="13"></rect></sc-if>
+              <sc-if value="{{ s.isShare }}" hint-placeholder-val="{{ false }}"><polyline points="4,13 4,20 20,20 20,13"></polyline><line x1="12" y1="4" x2="12" y2="15"></line><polyline points="8,8 12,4 16,8"></polyline></sc-if>
+            </svg>
+            <span style="font-size: 12px; letter-spacing: 0.1em; font-weight: 600;">{{ s.n }} / {{ total }}</span>
+          </div>
+          <h3 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 24px; line-height: 1.1;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Stage {{ s.n }}: </span>{{ s.name }}</h3>
+        </div>
+        <div style="padding: 16px 16px 0;">
+          <sc-if value="{{ s.showLane }}" hint-placeholder-val="{{ true }}">
+            <p style="margin: 0 0 6px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--color-neutral-700);">{{ s.laneLabel }}</p>
+          </sc-if>
+          <p style="margin: 0; font-size: 15px; line-height: 1.6; text-wrap: pretty;">{{ s.lines }}</p>
+        </div>
+        <div style="padding: 16px 16px 18px; align-self: end;">
+          <sc-if value="{{ s.showResult }}" hint-placeholder-val="{{ false }}">
+            <div style="padding-top: 14px; border-top: 1px solid var(--color-divider);">
+              <p style="margin: 0; font-family: var(--font-heading); font-size: 34px; line-height: 1; font-feature-settings: 'tnum';">{{ s.result.value }}</p>
+              <p style="margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: var(--color-neutral-700);">{{ s.result.label }}</p>
+            </div>
+          </sc-if>
+        </div>
+      </li>
+    </sc-for>
+  </ol>
+  </sc-if>
+  <sc-if value="{{ hasPoster }}" hint-placeholder-val="{{ true }}">
+    <figure style="margin: {{ posterMargin }};">
+      <button type="button" onClick="{{ openPoster }}" aria-label="View poster full size" style="display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in;">
+        <img src="{{ poster.src }}" alt="{{ poster.alt }}" class="plate" style="width: 100%; height: auto; display: block;">
+      </button>
+      <figcaption style="margin-top: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: 13px; line-height: 1.55; color: var(--color-neutral-700);"><span style="text-wrap: pretty;">{{ poster.caption }}</span><span aria-hidden="true" style="color: var(--color-accent-700);">Click to enlarge</span></figcaption>
+    </figure>
+    <dialog ref="{{ dlg }}" onClose="{{ onDlgClose }}" aria-label="Research poster, full size" style="width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; margin: 0; padding: 0; border: 0; background: rgba(32, 31, 29, 0.94); color: #f3f2f2;">
+      <div style="position: sticky; top: 0; z-index: 1; display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px;">
+        <button type="button" onClick="{{ toggleZoom }}" aria-pressed="{{ zoomed }}" style="font-family: var(--font-body); font-size: 13px; min-height: 44px; padding: 0 16px; background: #201f1d; color: #f3f2f2; border: 1px solid #9b9797; border-radius: 2px; cursor: pointer;">{{ zoomLabel }}</button>
+        <button type="button" onClick="{{ closePoster }}" style="font-family: var(--font-body); font-size: 13px; min-height: 44px; padding: 0 16px; background: #201f1d; color: #f3f2f2; border: 1px solid #9b9797; border-radius: 2px; cursor: pointer;">Close</button>
+      </div>
+      <div style="padding: 0 16px 24px; display: grid; justify-items: center;">
+        <img src="{{ poster.full }}" alt="{{ poster.alt }}" onClick="{{ toggleZoom }}" style="display: block; height: auto; width: {{ zoomW }}; max-width: {{ zoomMax }}; cursor: {{ zoomCursor }};">
+      </div>
+    </dialog>
+  </sc-if>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:1400},&quot;tagline&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Taking the guesswork out of plant care and poor air.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;label&quot;:&quot;Heading — use the project's own tagline&quot;},&quot;stages&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;{key:'discover'|'define'|'design'|'build'|'test'|'analyze'|'share', name:string, lines:string, result?:{value:string,label:string}, led?:boolean}&gt;&quot;},&quot;poster&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{src:string, full:string, alt:string, caption:string} | null&quot;},&quot;showResults&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;label&quot;:&quot;Show result row&quot;}}">
+const LEAF_LUMEN = [
+  { key: 'discover', name: 'Discover', lines: 'Literature review on indoor air quality, houseplants, and cognition.' },
+  { key: 'define', name: 'Define', lines: "Framed the problem: desk workers can't see the printer fumes and pollutants affecting their focus and breathing, and can't tell when their plants need care." },
+  { key: 'design', name: 'Design', lines: 'Co-designed a plant-pot prototype whose light is the whole interface: four states, read at a glance.' },
+  { key: 'test', name: 'Test', lines: 'Measured whether the alert cuts through focused work, and how the object feels on a desk.', result: { value: '79.4', label: 'System Usability Scale score' }, led: true },
+  { key: 'share', name: 'Share', lines: 'Designed the research poster and presented a live demo at the Cornell Fashion & Design Expo.', result: { value: '2nd', label: 'Prize, Cornell Human-Centered Design Research Poster Contest' }, led: true }
+];
+
+const LEAF_LUMEN_POSTER = {
+  src: 'assets/poster-leaflumen-c-web.jpg',
+  full: 'assets/poster-leaflumen.jpg',
+  caption: 'Research poster, designed by Sofia Mattson — 2nd prize, Cornell Human-Centered Design Research Poster Contest.',
+  alt: 'Leaf Lumen research poster. A plant pot that doubles as an indoor air-quality alarm signals with four light states: white for acceptable air, red for poor air, flashing red for dangerous air, and blue when the plant needs water. Participants did a Stroop attention task under each light state, then completed a distraction survey, the System Usability Scale, and an affect rating of their desk. Response times tracked signal urgency, with white fastest and flashing red slowest. The system scored 79.4 on the System Usability Scale, and desk affect rose from 50.3 without Leaf Lumen to 72.7 with it.'
+};
+
+class Component extends DCLogic {
+  state = { zoomed: false };
+  dlg = React.createRef();
+
+  renderVals() {
+    const poster = this.props.poster !== undefined ? this.props.poster : (this.props.stages ? null : LEAF_LUMEN_POSTER);
+    const z = this.state.zoomed;
+    const src = this.props.stages ?? LEAF_LUMEN;
+    const showResult = this.props.showResults ?? true;
+    const pad = n => String(n).padStart(2, '0');
+    const stages = src.map((s, i) => ({
+      ...s,
+      n: pad(i + 1),
+      laneLabel: s.led ? 'What I led' : 'What we did', showLane: !this.props.hideLaneLabels,
+      showResult: showResult && !!s.result,
+      isDiscover: s.key === 'discover', isDefine: s.key === 'define', isDesign: s.key === 'design', isTest: s.key === 'test', isShare: s.key === 'share', isBuild: s.key === 'build', isAnalyze: s.key === 'analyze'
+    }));
+    return {
+      tagline: this.props.tagline ?? 'Taking the guesswork out of plant care and poor air.',
+      stages, hasStages: stages.length > 0, posterMargin: stages.length ? '40px 0 0' : '0',
+      total: pad(src.length),
+      countLabel: src.length + ' stages',
+      hasPoster: !!poster, poster: poster || {},
+      dlg: this.dlg,
+      openPoster: () => { this.setState({ zoomed: false }); this.dlg.current && this.dlg.current.showModal(); },
+      closePoster: () => this.dlg.current && this.dlg.current.close(),
+      onDlgClose: () => this.setState({ zoomed: false }),
+      toggleZoom: () => this.setState(s => ({ zoomed: !s.zoomed })),
+      zoomed: z,
+      zoomLabel: z ? 'Fit to screen' : 'Zoom in',
+      zoomW: z ? 'auto' : '100%',
+      zoomMax: z ? 'none' : 'min(100%, calc((100vh - 100px) * 1.5))',
+      zoomCursor: z ? 'zoom-out' : 'zoom-in'
+    };
+  }
+}
+</script>
+</body>
+</html>
